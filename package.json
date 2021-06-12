@@ -1,0 +1,12 @@
+{
+	"name": "com.fedoradev.gameentity",
+	"displayName": "Game Entity",
+	"version": "1.0.0",
+	"unity": "2020.3",
+	"unityRelease": "2f1",
+	"description": "An Entity system for controlling Game Flow per Object in Unity.",
+	"author": {
+		"name": "Fedora Dev",
+		"email": "fedora.game.dev@gmail.com"
+	}
+}

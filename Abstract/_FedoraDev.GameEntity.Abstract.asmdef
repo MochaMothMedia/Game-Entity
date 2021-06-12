@@ -1,0 +1,16 @@
+{
+    "name": "_FedoraDev.GameEntity.Abstract",
+    "rootNamespace": "FedoraDev.GameEntity.Abstract",
+    "references": [
+        "GUID:40ffda31643e96f4095b285a61eceb36"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
