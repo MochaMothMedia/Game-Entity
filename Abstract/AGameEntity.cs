@@ -1,9 +1,10 @@
 using FedoraDev.GameEntity.Implementations;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace FedoraDev.GameEntity.Abstract
 {
-    public abstract class AGameEntity : MonoBehaviour, IGameEntity
+    public abstract class AGameEntity : SerializedMonoBehaviour, IGameEntity
     {
         public virtual void OnActivate() { }
         public virtual void OnDeactivate() { }
