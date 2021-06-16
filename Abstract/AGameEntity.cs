@@ -6,6 +6,8 @@ namespace FedoraDev.GameEntity.Abstract
 {
     public abstract class AGameEntity : SerializedMonoBehaviour, IGameEntity
     {
+        GameEntityPoolBehaviour _gameEntityPool;
+
         public virtual void OnActivate() { }
         public virtual void OnDeactivate() { }
         public virtual void OnPause() { }
@@ -17,14 +19,20 @@ namespace FedoraDev.GameEntity.Abstract
 
         public void OnEnable()
         {
+            _gameEntityPool = FindObjectOfType<GameEntityPoolBehaviour>();
+            if (_gameEntityPool != null)
+                _gameEntityPool.Register(this);
+            else
+                Debug.LogError("An instance of GameEntityPoolBehvaiour was not found." +
+                    "If you are using another implementation of IGameEntityPool, you must also reimplement IGameEntity instead of inheriting AGameEntity.");
             OnActivate();
-            FindObjectOfType<GameEntityPoolBehaviour>().Register(this);
         }
 
         public void OnDisable()
         {
+            if (_gameEntityPool != null)
+                _gameEntityPool.Unregister(this);
             OnDeactivate();
-            FindObjectOfType<GameEntityPoolBehaviour>().Unregister(this);
         }
 	}
 }
