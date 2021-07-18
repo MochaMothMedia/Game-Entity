@@ -6,6 +6,7 @@ namespace FedoraDev.GameEntity
     {
         IEnumerable<IGameEntity> GameEntities { get; }
 
+        IGameEntity GetEntityByID(uint id);
         void Register(IGameEntity entity);
         void Unregister(IGameEntity entity);
         void Pause();

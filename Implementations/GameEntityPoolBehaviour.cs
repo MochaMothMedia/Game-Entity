@@ -13,6 +13,14 @@ namespace FedoraDev.GameEntity.Implementations
 		[SerializeField] Dictionary<uint, IGameEntity> _gameEntities = new Dictionary<uint, IGameEntity>();
 		bool _paused = false;
 
+		public virtual IGameEntity GetEntityByID(uint id)
+		{
+			if (_gameEntities.ContainsKey(id))
+				return _gameEntities[id];
+
+			return null;
+		}
+
 		public virtual void Update()
 		{
 			if (_paused)
