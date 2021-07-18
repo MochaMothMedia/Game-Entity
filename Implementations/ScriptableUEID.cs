@@ -4,11 +4,12 @@ using UnityEngine;
 namespace FedoraDev.GameEntity.Implementations
 {
 	[CreateAssetMenu(fileName = "New UEID", menuName = "Unique Entity ID")]
-	public class ScriptableUEID : SerializedScriptableObject
-    {
+	public class ScriptableUEID : SerializedScriptableObject, IUniqueEntityID
+	{
 		[SerializeField] uint _id;
 
-        public uint ID {
+		public uint ID
+		{
 			get => _id;
 #if UNITY_EDITOR
 			set
@@ -66,7 +67,7 @@ namespace FedoraDev.GameEntity.Implementations
 #endif
 
 		public static bool operator ==(ScriptableUEID lhs, ScriptableUEID rhs) => lhs.ID == rhs.ID;
-        public static bool operator !=(ScriptableUEID lhs, ScriptableUEID rhs) => lhs.ID != rhs.ID;
+		public static bool operator !=(ScriptableUEID lhs, ScriptableUEID rhs) => lhs.ID != rhs.ID;
 
 		public override bool Equals(object obj) => obj is ScriptableUEID eID && base.Equals(obj) && ID == eID.ID;
 
@@ -77,5 +78,5 @@ namespace FedoraDev.GameEntity.Implementations
 			hashCode = (hashCode * -1521134295) + ID.GetHashCode();
 			return hashCode;
 		}
-    }
+	}
 }

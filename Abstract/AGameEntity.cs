@@ -6,11 +6,13 @@ namespace FedoraDev.GameEntity.Abstract
 {
     public abstract class AGameEntity : SerializedMonoBehaviour, IGameEntity
     {
-        [SerializeField, HideLabel, HorizontalGroup("Unique Entity ID/UEID"), BoxGroup("Unique Entity ID")] ScriptableUEID _uniqueID;
+        [SerializeField, HideLabel, HorizontalGroup("Unique Entity ID/UEID"), BoxGroup("Unique Entity ID")] IUniqueEntityID _uniqueID;
+        [SerializeField, HideLabel, BoxGroup("Entity Name")] string _name;
 
         GameEntityPoolBehaviour _gameEntityPool;
 
         public uint UniqueID => _uniqueID.ID;
+        public string Name => _name;
 
         public virtual void OnActivate() { }
         public virtual void OnDeactivate() { }
@@ -31,8 +33,11 @@ namespace FedoraDev.GameEntity.Abstract
 			}
             catch (System.NullReferenceException)
 			{
-                Debug.LogError("An instance of GameEntityPoolBehvaiour was not found." +
-                    "If you are using another implementation of IGameEntityPool, you must also reimplement IGameEntity instead of inheriting AGameEntity.");
+                if (_gameEntityPool == null)
+                    Debug.LogError("An instance of GameEntityPoolBehvaiour was not found." +
+                                   "If you are using another implementation of IGameEntityPool, you must also reimplement IGameEntity instead of inheriting AGameEntity.");
+                else if (_uniqueID == null)
+                    Debug.LogError($"Entity '{name}' doesn't have a UEID assigned to it.", this);
                 return;
             }
 
