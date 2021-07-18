@@ -2,6 +2,8 @@ namespace FedoraDev.GameEntity
 {
     public interface IGameEntity
     {
+        uint UniqueID { get; }
+
         void OnActivate();
         void OnDeactivate();
         void OnPause();

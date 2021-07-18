@@ -6,7 +6,11 @@ namespace FedoraDev.GameEntity.Abstract
 {
     public abstract class AGameEntity : SerializedMonoBehaviour, IGameEntity
     {
+        [SerializeField, HideLabel, HorizontalGroup("Unique Entity ID/UEID"), BoxGroup("Unique Entity ID")] ScriptableUEID _uniqueID;
+
         GameEntityPoolBehaviour _gameEntityPool;
+
+        public uint UniqueID => _uniqueID.ID;
 
         public virtual void OnActivate() { }
         public virtual void OnDeactivate() { }
@@ -41,5 +45,16 @@ namespace FedoraDev.GameEntity.Abstract
                 _gameEntityPool.Unregister(this);
             OnDeactivate();
         }
-	}
+
+#if UNITY_EDITOR
+        [Button, HorizontalGroup("Unique Entity ID/UEID")]
+        private void CreateUEID()
+		{
+            ScriptableUEID ueid = ScriptableObject.CreateInstance<ScriptableUEID>();
+            ueid.name = name;
+            UnityEditor.AssetDatabase.CreateAsset(ueid, $"Assets/{ueid.name} UEID.asset");
+            _uniqueID = ueid;
+		}
+#endif
+    }
 }

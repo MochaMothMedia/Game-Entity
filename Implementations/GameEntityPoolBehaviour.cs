@@ -1,14 +1,16 @@
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace FedoraDev.GameEntity.Implementations
 {
 	public class GameEntityPoolBehaviour : SerializedMonoBehaviour, IGameEntityPool
 	{
-		public IEnumerable<IGameEntity> GameEntities => _gameEntities.ToArray();
+		public IEnumerable<IGameEntity> GameEntities => _gameEntities.Values.ToArray();
 
-		[SerializeField] List<IGameEntity> _gameEntities = new List<IGameEntity>();
+		[SerializeField] Dictionary<uint, IGameEntity> _gameEntities = new Dictionary<uint, IGameEntity>();
 		bool _paused = false;
 
 		public virtual void Update()
@@ -31,32 +33,32 @@ namespace FedoraDev.GameEntity.Implementations
 		public virtual void Pause()
 		{
 			_paused = true;
-			_gameEntities.ForEach(gameEntity => gameEntity.OnPause());
+			_ = GameEntities.ForEach(gameEntity => gameEntity.OnPause());
 		}
 
 		[Button, ShowIf("_paused")]
 		public virtual void Unpause()
 		{
 			_paused = false;
-			_gameEntities.ForEach(gameEntity => gameEntity.OnUnpause());
+			_ = GameEntities.ForEach(gameEntity => gameEntity.OnUnpause());
 		}
 
-		public virtual void Tick() => _gameEntities.ForEach(gameEntity => gameEntity.Tick());
-		public virtual void PausedTick() => _gameEntities.ForEach(gameEntity => gameEntity.PausedTick());
+		public virtual void Tick() => GameEntities.ForEach(gameEntity => gameEntity.Tick());
+		public virtual void PausedTick() => GameEntities.ForEach(gameEntity => gameEntity.PausedTick());
 
-		public virtual void PhysicsTick() => _gameEntities.ForEach(gameEntity => gameEntity.PhysicsTick());
-		public virtual void PausedPhysicsTick() => _gameEntities.ForEach(gameEntity => gameEntity.PausedPhysicsTick());
+		public virtual void PhysicsTick() => GameEntities.ForEach(gameEntity => gameEntity.PhysicsTick());
+		public virtual void PausedPhysicsTick() => GameEntities.ForEach(gameEntity => gameEntity.PausedPhysicsTick());
 
 		public virtual void Register(IGameEntity entity)
 		{
-			if (!_gameEntities.Contains(entity))
-				_gameEntities.Add(entity);
+			if (!_gameEntities.ContainsKey(entity.UniqueID))
+				_gameEntities.Add(entity.UniqueID, entity);
 		}
 
 		public virtual void Unregister(IGameEntity entity)
 		{
-			if (_gameEntities.Contains(entity))
-				_gameEntities.Remove(entity);
+			if (_gameEntities.ContainsKey(entity.UniqueID))
+				_gameEntities.Remove(entity.UniqueID);
 		}
 	}
 }
