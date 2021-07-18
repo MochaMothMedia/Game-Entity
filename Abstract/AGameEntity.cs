@@ -20,11 +20,18 @@ namespace FedoraDev.GameEntity.Abstract
         public void OnEnable()
         {
             _gameEntityPool = FindObjectOfType<GameEntityPoolBehaviour>();
-            if (_gameEntityPool != null)
+
+			try
+			{
                 _gameEntityPool.Register(this);
-            else
+			}
+            catch (System.NullReferenceException)
+			{
                 Debug.LogError("An instance of GameEntityPoolBehvaiour was not found." +
                     "If you are using another implementation of IGameEntityPool, you must also reimplement IGameEntity instead of inheriting AGameEntity.");
+                return;
+            }
+
             OnActivate();
         }
 
