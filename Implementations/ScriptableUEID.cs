@@ -8,15 +8,17 @@ namespace FedoraDev.GameEntity.Implementations
 	{
 		[SerializeField] uint _id;
 
+		public string Name => base.name;
+
 		public uint ID
 		{
 			get => _id;
-#if UNITY_EDITOR
 			set
 			{
+#if UNITY_EDITOR
 				_id = value;
-			}
 #endif
+			}
 		}
 
 #if UNITY_EDITOR

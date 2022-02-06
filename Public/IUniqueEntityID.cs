@@ -2,6 +2,7 @@
 {
 	public interface IUniqueEntityID
 	{
-		uint ID { get; set; }
+		string Name { get; }
+		uint ID { get; }
 	}
 }
