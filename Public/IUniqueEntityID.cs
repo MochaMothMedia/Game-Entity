@@ -3,6 +3,8 @@
 	public interface IUniqueEntityID
 	{
 		string Name { get; }
-		uint ID { get; }
+		uint ID { get; set;  }
+
+		IUniqueEntityID Generate();
 	}
 }

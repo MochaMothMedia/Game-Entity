@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FedoraDev.GameEntity.Implementations
@@ -6,29 +7,38 @@ namespace FedoraDev.GameEntity.Implementations
 	[CreateAssetMenu(fileName = "New UEID", menuName = "Unique Entity ID")]
 	public class ScriptableUEID : SerializedScriptableObject, IUniqueEntityID
 	{
-		[SerializeField] uint _id;
-
 		public string Name => base.name;
 
 		public uint ID
 		{
-			get => _id;
+			get => _entityID.ID;
 			set
 			{
 #if UNITY_EDITOR
-				_id = value;
+				_entityID.ID = value;
 #endif
 			}
 		}
 
+		[SerializeField] IUniqueEntityID _entityID;
+
 #if UNITY_EDITOR
 		private void Awake()
 		{
-			GenerateID();
+			if (ID == 0)
+				GenerateID();
 		}
 
 		[Button]
 		private void GenerateID()
+		{
+			if (_entityID == null)
+				_entityID = Factory.GenerateUEID();
+			ScriptableUEID[] instances = GetAllInstances();
+			GenerateID(instances);
+		}
+
+		private void GenerateID(IUniqueEntityID[] potentialDuplicates)
 		{
 			System.Random random = new System.Random();
 			uint nextID;
@@ -38,16 +48,15 @@ namespace FedoraDev.GameEntity.Implementations
 				byte[] bytes = new byte[4];
 				random.NextBytes(bytes);
 				nextID = System.BitConverter.ToUInt32(bytes, 0);
-			} while (ContainsDuplicates(nextID));
+			} while (ContainsDuplicates(nextID, potentialDuplicates));
 
 			ID = nextID;
 		}
 
-		private bool ContainsDuplicates(uint id)
+		private bool ContainsDuplicates(uint id, IUniqueEntityID[] potentialDuplicates)
 		{
 
-			ScriptableUEID[] instances = GetAllInstances();
-			foreach (ScriptableUEID eID in instances)
+			foreach (IUniqueEntityID eID in potentialDuplicates)
 				if (eID.ID == id)
 					return true;
 
@@ -57,16 +66,20 @@ namespace FedoraDev.GameEntity.Implementations
 		private ScriptableUEID[] GetAllInstances()
 		{
 			string[] guids = UnityEditor.AssetDatabase.FindAssets($"t:{typeof(ScriptableUEID).Name}");
-			ScriptableUEID[] instances = new ScriptableUEID[guids.Length];
+			List<ScriptableUEID> instances = new List<ScriptableUEID>();
 			for (int i = 0; i < guids.Length; i++)
 			{
 				string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[i]);
-				instances[i] = UnityEditor.AssetDatabase.LoadAssetAtPath<ScriptableUEID>(path);
+				ScriptableUEID asset = UnityEditor.AssetDatabase.LoadAssetAtPath<ScriptableUEID>(path);
+				if (asset._entityID != null)
+					instances.Add(asset);
 			}
 
-			return instances;
+			return instances.ToArray();
 		}
 #endif
+
+		public IUniqueEntityID Generate() => _entityID.Generate();
 
 		public static bool operator ==(ScriptableUEID lhs, ScriptableUEID rhs) => lhs.ID == rhs.ID;
 		public static bool operator !=(ScriptableUEID lhs, ScriptableUEID rhs) => lhs.ID != rhs.ID;
