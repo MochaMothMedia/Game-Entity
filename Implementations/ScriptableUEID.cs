@@ -11,7 +11,7 @@ namespace FedoraDev.GameEntity.Implementations
 
 		public uint ID
 		{
-			get => _entityID.ID;
+			get => _entityID == null ? 0 : _entityID.ID;
 			set
 			{
 #if UNITY_EDITOR
