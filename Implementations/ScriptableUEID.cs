@@ -20,7 +20,7 @@ namespace FedoraDev.GameEntity.Implementations
 			}
 		}
 
-		[SerializeField] IUniqueEntityID _entityID;
+		[SerializeField, InlineProperty, HideLabel] IUniqueEntityID _entityID;
 
 #if UNITY_EDITOR
 		private void Awake()
@@ -51,6 +51,8 @@ namespace FedoraDev.GameEntity.Implementations
 			} while (ContainsDuplicates(nextID, potentialDuplicates));
 
 			ID = nextID;
+			UnityEditor.EditorUtility.SetDirty(this);
+			UnityEditor.AssetDatabase.SaveAssetIfDirty(this);
 		}
 
 		private bool ContainsDuplicates(uint id, IUniqueEntityID[] potentialDuplicates)
