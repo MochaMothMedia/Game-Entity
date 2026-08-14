@@ -4,16 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace FedoraDev.GameEntity.Implementations
+namespace MochaMoth.GameEntity.Implementations
 {
 	public class GameEntityPoolBehaviour : SerializedMonoBehaviour, IGameEntityPool
 	{
 		public IEnumerable<IGameEntity> GameEntities => _gameEntities.Values.ToArray();
 
-		[SerializeField] Dictionary<uint, IGameEntity> _gameEntities = new Dictionary<uint, IGameEntity>();
+		[SerializeField] Dictionary<string, IGameEntity> _gameEntities = new Dictionary<string, IGameEntity>();
 		bool _paused = false;
 
-		public virtual IGameEntity GetEntityByID(uint id)
+		public virtual IGameEntity GetEntityByID(string id)
 		{
 			if (_gameEntities.ContainsKey(id))
 				return _gameEntities[id];

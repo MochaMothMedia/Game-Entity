@@ -1,9 +1,9 @@
-﻿namespace FedoraDev.GameEntity
+﻿namespace MochaMoth.GameEntity
 {
 	public interface IUniqueEntityID
 	{
 		string Name { get; }
-		uint ID { get; set;  }
+		string ID { get; set;  }
 
 		IUniqueEntityID Generate();
 	}

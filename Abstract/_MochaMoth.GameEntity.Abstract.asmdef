@@ -1,8 +1,9 @@
 {
-    "name": "_FedoraDev.GameEntity.Implementations",
-    "rootNamespace": "FedoraDev.GameEntity.Implementations",
+    "name": "_MochaMoth.GameEntity.Abstract",
+    "rootNamespace": "MochaMoth.GameEntity.Abstract",
     "references": [
-        "GUID:40ffda31643e96f4095b285a61eceb36"
+        "GUID:40ffda31643e96f4095b285a61eceb36",
+        "GUID:e20c6d12eb8a8d347b131dcee6f41883"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

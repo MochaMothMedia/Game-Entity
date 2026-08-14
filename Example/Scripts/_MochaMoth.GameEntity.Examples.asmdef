@@ -1,7 +1,10 @@
 {
-    "name": "_FedoraDev.GameEntity",
-    "rootNamespace": "FedoraDev.GameEntity",
-    "references": [],
+    "name": "_MochaMoth.GameEntity.Examples",
+    "rootNamespace": "MochaMoth.GameEntity.Examples",
+    "references": [
+        "GUID:40ffda31643e96f4095b285a61eceb36",
+        "GUID:870e9b1e061f15640a6afb784fd1e53f"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

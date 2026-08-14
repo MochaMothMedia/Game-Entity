@@ -1,13 +1,13 @@
 using UnityEngine;
 
-namespace FedoraDev.GameEntity.Implementations
+namespace MochaMoth.GameEntity.Implementations
 {
 	public class SimpleUEID : IUniqueEntityID
 	{
 		public string Name => "Simple UEID";
-		public uint ID { get => _id; set => _id = value; }
+		public string ID { get => _id; set => _id = value; }
 
-		[SerializeField] uint _id;
+		[SerializeField] string _id;
 
 		public IUniqueEntityID Generate() => new SimpleUEID();
 	}
