@@ -34,7 +34,6 @@ namespace MochaMoth.GameEntity.Implementations
 		private void GenerateID()
 		{
 			_entityID ??= Factory.GenerateUEID();
-			ID = Guid.NewGuid().ToString();
 			EditorUtility.SetDirty(this);
 			AssetDatabase.SaveAssetIfDirty(this);
 		}

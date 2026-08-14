@@ -6,7 +6,7 @@ namespace MochaMoth.GameEntity.Abstract
 {
 	public abstract class AGameEntity : SerializedMonoBehaviour, IGameEntity
 	{
-		[SerializeField, HideLabel, HorizontalGroup("Unique Entity ID/UEID"), BoxGroup("Unique Entity ID")] IUniqueEntityID _uniqueID;
+		[SerializeField, HideLabel, HorizontalGroup("Unique Entity ID/UEID"), BoxGroup("Unique Entity ID")] protected IUniqueEntityID _uniqueID;
 		[SerializeField, HideLabel, BoxGroup("Entity Name")] string _name;
 
 		GameEntityPoolBehaviour _gameEntityPool;
@@ -25,6 +25,8 @@ namespace MochaMoth.GameEntity.Abstract
 
 		public void OnEnable()
 		{
+			OnActivate();
+			
 			_gameEntityPool = FindAnyObjectByType<GameEntityPoolBehaviour>();
 
 			try
@@ -40,8 +42,6 @@ namespace MochaMoth.GameEntity.Abstract
 					Debug.LogError($"Entity '{name}' doesn't have a UEID assigned to it.", this);
 				return;
 			}
-
-			OnActivate();
 		}
 
 		public void OnDisable()

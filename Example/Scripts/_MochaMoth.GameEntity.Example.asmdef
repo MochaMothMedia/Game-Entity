@@ -1,6 +1,6 @@
 {
-    "name": "_MochaMoth.GameEntity.Examples",
-    "rootNamespace": "MochaMoth.GameEntity.Examples",
+    "name": "_MochaMoth.GameEntity.Example",
+    "rootNamespace": "MochaMoth.GameEntity.Example",
     "references": [
         "GUID:40ffda31643e96f4095b285a61eceb36",
         "GUID:870e9b1e061f15640a6afb784fd1e53f"

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace MochaMoth.GameEntity.Implementations
@@ -9,6 +10,11 @@ namespace MochaMoth.GameEntity.Implementations
 
 		[SerializeField] string _id;
 
-		public IUniqueEntityID Generate() => new SimpleUEID();
+		public IUniqueEntityID Generate()
+		{
+			SimpleUEID ueid = new SimpleUEID();
+			ueid.ID = Guid.NewGuid().ToString();
+			return ueid;
+		}
 	}
 }
